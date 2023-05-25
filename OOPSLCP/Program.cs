@@ -24,7 +24,7 @@ namespace OOPSLCP
         }
     }
 
-    internal class Line
+    internal class Line : IComparable<Line>
     {
         private Point point1;
         private Point point2;
@@ -43,12 +43,17 @@ namespace OOPSLCP
             return length;
         }
 
-        public bool IsEqual(Line otherLine)
+        public int CompareTo(Line otherLine)
         {
-            return (point1.X == otherLine.point1.X && point1.Y == otherLine.point1.Y &&
-                    point2.X == otherLine.point2.X && point2.Y == otherLine.point2.Y) ||
-                   (point1.X == otherLine.point2.X && point1.Y == otherLine.point2.Y &&
-                    point2.X == otherLine.point1.X && point2.Y == otherLine.point1.Y);
+            double length1 = CalculateLength();
+            double length2 = otherLine.CalculateLength();
+
+            if (length1 < length2)
+                return -1;
+            else if (length1 > length2)
+                return 1;
+            else
+                return 0;
         }
     }
 
@@ -74,11 +79,11 @@ namespace OOPSLCP
             double length3 = line3.CalculateLength();
             Console.WriteLine($"Length of line3: {length3}");
 
-            bool isEqual1 = line1.IsEqual(line2);
-            Console.WriteLine($"line1 and line2 are equal: {isEqual1}");
+            int comparison1 = line1.CompareTo(line2);
+            Console.WriteLine($"Comparison of line1 and line2: {comparison1}");
 
-            bool isEqual2 = line1.IsEqual(line3);
-            Console.WriteLine($"line1 and line3 are equal: {isEqual2}");
+            int comparison2 = line1.CompareTo(line3);
+            Console.WriteLine($"Comparison of line1 and line3: {comparison2}");
         }
     }
 }
