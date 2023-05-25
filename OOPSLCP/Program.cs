@@ -22,6 +22,20 @@ namespace OOPSLCP
         {
             get { return y; }
         }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null || GetType() != obj.GetType())
+                return false;
+
+            Point otherPoint = (Point)obj;
+            return (x == otherPoint.x) && (y == otherPoint.y);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(x.GetHashCode(), y.GetHashCode());
+        }
     }
 
     internal class Line : IComparable<Line>
@@ -55,6 +69,21 @@ namespace OOPSLCP
             else
                 return 0;
         }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null || GetType() != obj.GetType())
+                return false;
+
+            Line otherLine = (Line)obj;
+            return (point1.Equals(otherLine.point1) && point2.Equals(otherLine.point2)) ||
+                   (point1.Equals(otherLine.point2) && point2.Equals(otherLine.point1));
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(point1.GetHashCode(), point2.GetHashCode());
+        }
     }
 
     internal class Program
@@ -78,6 +107,12 @@ namespace OOPSLCP
 
             double length3 = line3.CalculateLength();
             Console.WriteLine($"Length of line3: {length3}");
+
+            bool isEqual1 = line1.Equals(line2);
+            Console.WriteLine($"line1 and line2 are equal: {isEqual1}");
+
+            bool isEqual2 = line1.Equals(line3);
+            Console.WriteLine($"line1 and line3 are equal: {isEqual2}");
 
             int comparison1 = line1.CompareTo(line2);
             Console.WriteLine($"Comparison of line1 and line2: {comparison1}");
