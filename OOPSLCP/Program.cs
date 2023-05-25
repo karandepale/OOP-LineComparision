@@ -42,6 +42,14 @@ namespace OOPSLCP
             double length = Math.Sqrt(Math.Pow(xDiff, 2) + Math.Pow(yDiff, 2));
             return length;
         }
+
+        public bool IsEqual(Line otherLine)
+        {
+            return (point1.X == otherLine.point1.X && point1.Y == otherLine.point1.Y &&
+                    point2.X == otherLine.point2.X && point2.Y == otherLine.point2.Y) ||
+                   (point1.X == otherLine.point2.X && point1.Y == otherLine.point2.Y &&
+                    point2.X == otherLine.point1.X && point2.Y == otherLine.point1.Y);
+        }
     }
 
     internal class Program
@@ -53,10 +61,24 @@ namespace OOPSLCP
             Point point1 = new Point(3, 4);
             Point point2 = new Point(6, 8);
 
-            Line line = new Line(point1, point2);
-            double length = line.CalculateLength();
+            Line line1 = new Line(point1, point2);
+            Line line2 = new Line(new Point(3, 4), new Point(6, 8));
+            Line line3 = new Line(new Point(1, 2), new Point(6, 8));
 
-            Console.WriteLine($"Length of the line: {length}");
+            double length1 = line1.CalculateLength();
+            Console.WriteLine($"Length of line1: {length1}");
+
+            double length2 = line2.CalculateLength();
+            Console.WriteLine($"Length of line2: {length2}");
+
+            double length3 = line3.CalculateLength();
+            Console.WriteLine($"Length of line3: {length3}");
+
+            bool isEqual1 = line1.IsEqual(line2);
+            Console.WriteLine($"line1 and line2 are equal: {isEqual1}");
+
+            bool isEqual2 = line1.IsEqual(line3);
+            Console.WriteLine($"line1 and line3 are equal: {isEqual2}");
         }
     }
 }
